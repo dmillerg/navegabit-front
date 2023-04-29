@@ -1,0 +1,12 @@
+<div class="card body-font p-4">
+    <div class="flex align-items-center justify-content-end w-ull gap-2">
+        <app-generic-button [buttons]="buttons"></app-generic-button>
+        <div class="mt-3">
+            <p-dropdown [options]="exportypes" [(ngModel)]="selected" optionLabel="name"
+                placeholder="export options"></p-dropdown>
+        </div>
+        <app-generic-button [buttons]="buttons2"></app-generic-button>
+    </div>
+    <app-generic-table [tableModel]="tableData" [style]="{'margin-top':'30px'}" [showActions]="false"
+        [showFilter]="true" [header]="'Workers table '"></app-generic-table>
+</div>

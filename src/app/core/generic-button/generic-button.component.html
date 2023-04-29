@@ -1,0 +1,8 @@
+<div [class]="'flex flex-row flex-wrap gap-2 mt-3 ' + position">
+    <p-button *ngFor="let button of buttons"
+              [disabled]="button.disabled?button.disabled:false"
+              [label]="button.label"
+              [icon]="button.icon ? 'pi ' + button.icon : ''"
+              (onClick)="emit(button.function)"
+    ></p-button>
+  </div>

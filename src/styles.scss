@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-dark-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+.body-font{
+    font-family: "latoregular", "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+input, textarea{
+    width: 100%;
+}
+
+input{
+    min-width: 50px;
+}

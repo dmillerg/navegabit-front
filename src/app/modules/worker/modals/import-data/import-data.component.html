@@ -1,0 +1,11 @@
+<div class="card">
+    <p-messages [(value)]="messageService" [enableService]="false"></p-messages>
+    <p-fileUpload chooseLabel="Select" cancelLabel="Cancel" [showUploadButton]="false" [customUpload]="true"
+        (onSelect)="csvImport($event)" (uploadHandler)="csvImport($event)" [multiple]="false" accept=".csv, .xls,.xlsx">
+        <ng-template let-file pTemplate="file">
+            <app-generic-table [tableModel]="tableData" [showActions]="false"></app-generic-table>
+        </ng-template>
+    </p-fileUpload>
+
+    <app-generic-button [buttons]="buttons"></app-generic-button>
+</div>

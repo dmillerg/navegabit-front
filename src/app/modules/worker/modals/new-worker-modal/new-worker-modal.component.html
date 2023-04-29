@@ -1,0 +1,28 @@
+<form action="" [formGroup]="form" class="flex flex-column gap-4">
+    <span class="p-float-label">
+        <input id="float-input" type="text" pInputText name="name" formControlName="name">
+        <label for="float-input">Name*</label>
+    </span>
+    <span class="p-float-label">
+        <input id="float-input" type="text" pInputText name="company" formControlName="company">
+        <label for="float-input">Company Name*</label>
+    </span>
+    <span class="p-float-label">
+        <input id="float-input" type="text" pInputText name="name" formControlName="country">
+        <label for="float-input">Country*</label>
+    </span>
+    <span class="p-float-label">
+        <p-dropdown [options]="prioritys" formControlName="priority" optionLabel="name" optionValue="name"
+        placeholder="priority" [style]="{'width': '50%'}"></p-dropdown>
+        <label for="float-input">Priority*</label>
+    </span>
+    <span class="p-float-label">
+        <input id="float-input" type="text" pInputText name="email" formControlName="email">
+        <label for="float-input">Email*</label>
+    </span>
+    <span class="p-float-label">
+        <input id="float-input" type="text" pInputText name="phone" formControlName="phone">
+        <label for="float-input">Phone Number</label>
+    </span>
+    <app-generic-button [buttons]="buttons"></app-generic-button>
+</form>

@@ -1,0 +1,99 @@
+<div class="card">
+    <h3>{{header}}</h3>
+    <p-table responsiveLayout="stack" [breakpoint]="'960px'" #dt2 [value]="tableModel.values" [paginator]="true"
+        [rows]="rows" [showCurrentPageReport]="true" [tableStyle]="{'min-width': '100%'}"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} elements"
+        [rowsPerPageOptions]="paginationArray">
+        <ng-template pTemplate="header">
+            <tr>
+                <th [id]="header" *ngFor="let header of tableModel.header" [pSortableColumn]="header.field"
+                    style="width:25%">
+                    <div class="flex flex-row align-items-center">
+                        <div *ngIf="header.type!='boolean'">
+                            {{header.label}}
+                        </div>
+                        <div *ngIf="header.type=='boolean'">
+                            <p-checkbox [binary]="true" inputId="binary" [ngModel]="header.allSelected"
+                                (click)="execute(tableModel.cellAction, header.field,'todo')"></p-checkbox>
+                        </div>
+                        <p-sortIcon *ngIf="!header.orderIcon" [field]="header.field"></p-sortIcon>
+                    </div>
+                </th>
+                <th id="action" *ngIf="showActions">Acciones</th>
+            </tr>
+            <ng-container *ngIf="showFilter">
+                <tr>
+                    <th [id]="filterData.field" *ngFor="let filterData of tableModel.header">
+                        <ng-container
+                            *ngIf="filterData.filter && filterData.filter.type=='numeric' && !filterData.filter.isDropdown">
+                            <p-columnFilter appendTo="body"
+                                [display]="advanceFilter ? 'menu' : 'row'" [type]="filterData.filter.type"
+                                [field]="filterData.field">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-inputNumber [ngModel]="value" (ngModelChange)="filter($event)">
+
+                                    </p-inputNumber>
+                                </ng-template>
+                            </p-columnFilter>
+                        </ng-container>
+                        <ng-container
+                            *ngIf="filterData.filter && !filterData.filter.isDropdown && filterData.filter.type!='numeric'">
+                            <p-columnFilter appendTo="body"
+                                [display]="advanceFilter ? 'menu' : 'row'" [type]="filterData.filter.type"
+                                [field]="filterData.field">
+                            </p-columnFilter>
+                        </ng-container>
+                        <ng-container
+                            *ngIf="filterData.filter && filterData.filter.isDropdown && filterData.filter.values!">
+                            <p-columnFilter [display]="advanceFilter ? 'menu' : 'row'" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false"
+                                [field]="filterData.field" matchMode="equals">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-dropdown appendTo="body" [ngModel]="value" [options]="filterData.filter!.values!"
+                                        [optionValue]="filterData.filter!.optionValue!"
+                                        [optionLabel]="filterData.filter!.optionLabel!"
+                                        (onChange)="filter($event.value)" placeholder="Seleccione..."
+                                        [showClear]="true">
+                                        <ng-template let-option pTemplate="item">
+                                            <span>{{option[filterData.filter!.optionLabel!]}}</span>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </ng-template>
+                            </p-columnFilter>
+                        </ng-container>
+                    </th>
+                    <th id="filterAction" *ngIf="showActions">
+                        <p-columnFilter [showMenu]="false" display="menu"></p-columnFilter>
+                    </th>
+                </tr>
+
+            </ng-container>
+        </ng-template>
+        <ng-template pTemplate="body" let-object>
+            <tr [class]="tableModel.rowCond(object)?tableModel.rowClass:''">
+                <ng-container *ngFor="let head of tableModel.header">
+                    <td *ngIf="head.type!='boolean'"
+                        [class]="tableModel.cellCond(object,head.field)?tableModel.cellClass:''"
+                        (click)="execute(tableModel.cellAction, object, head.field)"><span
+                            class="p-column-title">{{head.label}}:</span>{{object[head.field]}}</td>
+                    <td *ngIf="head.type=='boolean'"
+                        [class]="tableModel.cellCond(object,head.field)?tableModel.cellClass:''"
+                        (click)="execute(tableModel.cellAction, object, head.field)">
+                        <p-checkbox [binary]="true" [ngModel]="object[head.field]" inputId="binary"
+                            ></p-checkbox>
+                    </td>
+                </ng-container>
+                <ng-container *ngIf="showActions">
+                    <td> <span class="p-column-title">Actions:</span>
+                        <app-generic-button [buttons]="tableModel.actions? tableModel.actions: []"></app-generic-button>
+                    </td>
+                </ng-container>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td [attr.colspan]="tableModel.header.length">{{tableModel.noDataText || 'No found data'}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
